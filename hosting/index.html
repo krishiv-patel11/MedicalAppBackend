@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fa">
+
+  <title>CareConnect | Verified Medical Profile</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 32px 16px;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f7fa;
+      color: #172033;
+    }
+
+    main {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 25px;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    .intro {
+      margin: 0 0 22px;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .brand {
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: 0.2px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    .verified {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #047857;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .verified-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #d1fae5;
+      font-size: 12px;
+    }
+
+    .person-name {
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .location {
+      margin-top: 8px;
+      color: #475569;
+      font-size: 14px;
+    }
+
+    .section-description {
+      margin: -4px 0 14px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .contact-link {
+      display: inline-block;
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+
+    .event,
+    .medication {
+      border-top: 1px solid #e2e8f0;
+      padding: 16px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .event:first-child,
+    .medication:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .event:last-child,
+    .medication:last-child {
+      padding-bottom: 0;
+    }
+
+    .event-title,
+    .medication-name {
+      font-size: 15px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .event-date,
+    .medication-detail {
+      margin-top: 5px;
+      color: #475569;
+      font-size: 13px;
+    }
+
+    .event-type,
+    .medication-badge {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .medication-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .medication-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 20px;
+    }
+
+    .medication-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .medication-dosage {
+      margin-top: 4px;
+      color: #475569;
+      font-size: 13px;
+    }
+
+    .medication-detail strong {
+      color: #334155;
+    }
+
+    .day-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 7px;
+    }
+
+    .day-chip {
+      padding: 4px 8px;
+      border-radius: 7px;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .empty,
+    .status {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .empty {
+      margin: 0;
+    }
+
+    .status {
+      padding: 18px;
+      border-radius: 12px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      overflow-wrap: anywhere;
+    }
+
+    .error {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .footer {
+      margin-top: 22px;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="brand">CareConnect</div>
+
+    <h1>Verified Medical Profile</h1>
+
+    <p class="intro">
+      Identity, contact information, upcoming help opportunities,
+      and recorded medication information.
+    </p>
+
+    <div id="status" class="status" role="status" aria-live="polite">
+      Verifying identity...
+    </div>
+
+    <div id="profile" hidden>
+      <section class="panel">
+        <div class="verified">
+          <span class="verified-mark" aria-hidden="true">✓</span>
+          Identity verified
+        </div>
+
+        <div id="person-name" class="person-name"></div>
+        <div id="location" class="location"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Contact Information</h2>
+        <p class="section-description">
+          Contact information recorded in CareConnect.
+        </p>
+        <div id="email-container"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Upcoming Help Opportunities</h2>
+        <p class="section-description">
+          Accepted opportunities scheduled within the next seven days.
+        </p>
+        <div id="events-container"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Medications</h2>
+        <p class="section-description">
+          Recorded medication names, dosages, schedules, and tracking
+          information. Confirm all details with the individual.
+        </p>
+        <div id="medications-container"></div>
+      </section>
+    </div>
+
+    <div class="footer">
+      Information is shown as recorded in CareConnect and may not reflect
+      recent changes. This page is not a substitute for medical advice.
+      Confirm medication details with the individual or their healthcare
+      professional. Only share this page with an authorized recipient.
+    </div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-functions-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      projectId: "careconnect-3bd75"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const functions = firebase.app().functions("us-central1");
+
+    const statusElement = document.getElementById("status");
+    const profileElement = document.getElementById("profile");
+
+    const WEEKDAYS = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+
+    function getText(value) {
+      if (typeof value === "string" || typeof value === "number") {
+        return String(value).trim();
+      }
+
+      return "";
+    }
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+
+    function makeDetail(label, value) {
+      const text = getText(value);
+
+      if (!text) {
+        return null;
+      }
+
+      const detail = document.createElement("div");
+      detail.className = "medication-detail";
+
+      const strong = document.createElement("strong");
+      strong.textContent = label + ": ";
+
+      detail.append(strong, document.createTextNode(text));
+      return detail;
+    }
+
+    function parseDate(value) {
+      if (!value) {
+        return null;
+      }
+
+      if (typeof value === "object" && value.seconds) {
+        const date = new Date(value.seconds * 1000);
+        return Number.isNaN(date.getTime()) ? null : date;
+      }
+
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? null : date;
+    }
+
+    function formatDateTime(value) {
+      const date = parseDate(value);
+
+      if (!date) {
+        return "";
+      }
+
+      return new Intl.DateTimeFormat(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function formatTime(value) {
+      const date = parseDate(value);
+
+      if (!date) {
+        return getText(value);
+      }
+
+      return new Intl.DateTimeFormat(undefined, {
+        hour: "numeric",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function formatEventDate(value) {
+      const date = parseDate(value);
+
+      if (!date) {
+        return "Date unavailable";
+      }
+
+      return new Intl.DateTimeFormat(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function renderEmail(emailValue) {
+      const container = document.getElementById("email-container");
+      const email = getText(emailValue);
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        container.innerHTML =
+          '<p class="empty">Email not available.</p>';
+        return;
+      }
+
+      const link = document.createElement("a");
+      link.className = "contact-link";
+      link.href = "mailto:" + email;
+      link.textContent = email;
+
+      container.replaceChildren(link);
+    }
+
+    function renderUpcomingEvents(events) {
+      const container = document.getElementById("events-container");
+      container.replaceChildren();
+
+      if (!Array.isArray(events) || events.length === 0) {
+        container.innerHTML =
+          '<p class="empty">No accepted help opportunities scheduled for the next seven days.</p>';
+        return;
+      }
+
+      events.slice(0, 3).forEach((event) => {
+        const card = document.createElement("article");
+        card.className = "event";
+
+        const title = document.createElement("div");
+        title.className = "event-title";
+        title.textContent =
+          getText(event.title) || "Accepted Help Opportunity";
+
+        const date = document.createElement("div");
+        date.className = "event-date";
+        date.textContent = formatEventDate(event.date);
+
+        const type = document.createElement("span");
+        type.className = "event-type";
+        type.textContent = getText(event.type) || "Help Opportunity";
+
+        card.append(title, date, type);
+        container.appendChild(card);
+      });
+    }
+
+    function getScheduleDays(days) {
+      if (!Array.isArray(days)) {
+        return [];
+      }
+
+      return days
+        .map((day) => {
+          // Your app uses 1 = Sunday through 7 = Saturday.
+          if (
+            typeof day === "number" &&
+            Number.isInteger(day) &&
+            day >= 1 &&
+            day <= 7
+          ) {
+            return WEEKDAYS[day - 1];
+          }
+
+          if (typeof day === "string") {
+            const normalized = day.trim().toLowerCase();
+
+            const fullMatch = WEEKDAYS.find(
+              (name) => name.toLowerCase() === normalized
+            );
+
+            if (fullMatch) {
+              return fullMatch;
+            }
+
+            const shortMatch = WEEKDAYS.find(
+              (name) => name.slice(0, 3).toLowerCase() === normalized
+            );
+
+            return shortMatch || "";
+          }
+
+          return "";
+        })
+        .filter(Boolean)
+        .filter((day, index, allDays) => allDays.indexOf(day) === index)
+        .sort((a, b) => WEEKDAYS.indexOf(a) - WEEKDAYS.indexOf(b));
+    }
+
+    function renderScheduleTimes(times) {
+      if (!Array.isArray(times) || times.length === 0) {
+        return "";
+      }
+
+      return times
+        .map(formatTime)
+        .filter(Boolean)
+        .filter((time, index, allTimes) => allTimes.indexOf(time) === index)
+        .join(", ");
+    }
+
+    function renderMedications(medications) {
+      const container = document.getElementById("medications-container");
+      container.replaceChildren();
+
+      if (!Array.isArray(medications) || medications.length === 0) {
+        container.innerHTML =
+          '<p class="empty">No medication records found.</p>';
+        return;
+      }
+
+      medications.forEach((medication) => {
+        const card = document.createElement("article");
+        card.className = "medication";
+
+        const heading = document.createElement("div");
+        heading.className = "medication-heading";
+
+        const titleGroup = document.createElement("div");
+        titleGroup.className = "medication-title-group";
+
+        const name = document.createElement("div");
+        name.className = "medication-name";
+        name.textContent =
+          getText(medication.name) || "Unnamed medication";
+
+        titleGroup.appendChild(name);
+
+        const dosage = getText(medication.dosage);
+        if (dosage) {
+          const dosageElement = document.createElement("div");
+          dosageElement.className = "medication-dosage";
+          dosageElement.textContent = "Dosage: " + dosage;
+          titleGroup.appendChild(dosageElement);
+        } else {
+          const missingDosage = document.createElement("div");
+          missingDosage.className = "medication-dosage";
+          missingDosage.textContent = "Dosage not provided";
+          titleGroup.appendChild(missingDosage);
+        }
+
+        const icon = document.createElement("div");
+        icon.className = "medication-icon";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = "＋";
+
+        heading.append(titleGroup, icon);
+        card.appendChild(heading);
+
+        const times = renderScheduleTimes(medication.times);
+        const timeDetail = makeDetail("Scheduled time", times);
+
+        if (timeDetail) {
+          card.appendChild(timeDetail);
+        }
+
+        const days = getScheduleDays(medication.scheduleDays);
+
+        if (days.length > 0) {
+          const daysSection = document.createElement("div");
+          daysSection.className = "medication-detail";
+
+          const label = document.createElement("strong");
+          label.textContent = "Scheduled days:";
+
+          const dayList = document.createElement("div");
+          dayList.className = "day-list";
+
+          days.forEach((day) => {
+            const chip = document.createElement("span");
+            chip.className = "day-chip";
+            chip.textContent = day;
+            dayList.appendChild(chip);
+          });
+
+          daysSection.append(label, dayList);
+          card.appendChild(daysSection);
+        }
+
+        const optionalDetails = [
+          ["Frequency", medication.frequency],
+          ["Instructions", medication.instructions],
+          ["Last taken", formatDateTime(medication.lastTaken)],
+          ["Start date", formatDateTime(medication.startDate)],
+          ["End date", formatDateTime(medication.endDate)],
+          ["Notes", medication.notes]
+        ];
+
+        optionalDetails.forEach(([label, value]) => {
+          const detail = makeDetail(label, value);
+
+          if (detail) {
+            card.appendChild(detail);
+          }
+        });
+
+        if (
+          medication.streak !== null &&
+          medication.streak !== undefined &&
+          Number.isFinite(Number(medication.streak))
+        ) {
+          const badge = document.createElement("span");
+          badge.className = "medication-badge";
+          badge.textContent = Number(medication.streak) +
+            (Number(medication.streak) === 1
+              ? " day streak"
+              : " day streak");
+          card.appendChild(badge);
+        }
+
+        const takenCount = Array.isArray(medication.takenTimes)
+          ? medication.takenTimes.length
+          : 0;
+
+        if (takenCount > 0) {
+          const detail = makeDetail(
+            "Dose records",
+            takenCount + (takenCount === 1 ? " recorded entry" : " recorded entries")
+          );
+
+          if (detail) {
+            card.appendChild(detail);
+          }
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderSuccess(data) {
+      const name = getText(data.displayName) || "Name unavailable";
+      const city = getText(data.city);
+      const state = getText(data.state);
+      const location = [city, state].filter(Boolean).join(", ");
+
+      setText("person-name", name);
+      setText("location", location || "Location not available");
+
+      renderEmail(data.email);
+      renderUpcomingEvents(data.upcomingEvents);
+      renderMedications(data.medications);
+
+      statusElement.hidden = true;
+      profileElement.hidden = false;
+    }
+
+    function renderError(message) {
+      profileElement.hidden = true;
+      statusElement.hidden = false;
+      statusElement.className = "status error";
+      statusElement.textContent = message;
+    }
+
+    function getReadableError(error) {
+      const code = error && error.code ? error.code : "";
+
+      const messages = {
+        "functions/unauthenticated":
+          "Authentication is required to complete this request.",
+        "functions/invalid-argument":
+          "The verification link is invalid.",
+        "functions/not-found":
+          "This verification link could not be found. Generate a new QR code.",
+        "functions/failed-precondition":
+          "This QR code has already been used. Generate a new QR code.",
+        "functions/deadline-exceeded":
+          "This QR code has expired. Generate a new QR code.",
+        "functions/permission-denied":
+          "The identity associated with this QR code is not verified."
+      };
+
+      if (messages[code]) {
+        return messages[code];
+      }
+
+      console.error("QR verification error details:", {
+        code: code || "unknown",
+        message: error && error.message ? error.message : "No message"
+      });
+
+      return "Verification could not be completed. Please generate a new QR code and try again.";
+    }
+
+    async function verifyIdentity() {
+      const match = window.location.pathname.match(
+        /^\/v\/([a-f0-9]{64})\/?$/
+      );
+
+      if (!match) {
+        renderError(
+          "Invalid verification link. Open the complete CareConnect QR link."
+        );
+        return;
+      }
+
+      try {
+        const resolveQRCodeToken =
+          functions.httpsCallable("resolveQRCodeToken");
+
+        const result = await resolveQRCodeToken({
+          token: match[1]
+        });
+
+        const data = result.data;
+
+        if (
+          !data ||
+          data.success !== true ||
+          data.verified !== true
+        ) {
+          throw new Error("The verification response was incomplete.");
+        }
+
+        renderSuccess(data);
+      } catch (error) {
+        console.error("QR verification failed:", error);
+        renderError(getReadableError(error));
+      }
+    }
+
+    verifyIdentity();
+  </script>
+</body>
+</html>

@@ -13,6 +13,20 @@
       "predeploy": []
     }
   ],
+  "hosting": {
+    "public": "hosting",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/v/*",
+        "destination": "/index.html"
+      }
+    ]
+  },
   "emulators": {
     "functions": {
       "port": 5001
